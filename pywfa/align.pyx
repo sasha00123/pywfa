@@ -335,7 +335,7 @@ cdef class WavefrontAligner:
         self.text_len = 0
         if pattern:
             self._pattern = pattern.upper()
-            self._bpattern = self._pattern.encode("ascii")
+            self._bpattern = self._pattern.encode("cp1251")
             self.pattern_len = len(self._bpattern)
 
         # could get a malloc version working
@@ -418,9 +418,9 @@ cdef class WavefrontAligner:
         """
         if pattern is not None:
             self._pattern = pattern.upper()
-            self._bpattern = self._pattern.encode("ascii")
+            self._bpattern = self._pattern.encode("cp1251")
             self.pattern_len = len(self._bpattern)
-        cdef bytes t = text.upper().encode('ascii')
+        cdef bytes t = text.upper().encode('cp1251')
         self._text = text
         self.text_len = len(t)
         if not self._wildcard:
@@ -431,7 +431,7 @@ cdef class WavefrontAligner:
         return self.wf_aligner.cigar.score
 
     def cigar_print_pretty(self, file_name=None):
-        cdef bytes t = self._text.encode('ascii')
+        cdef bytes t = self._text.encode('cp1251')
         cdef bytes fname_bytes
         cdef char* fname
         cdef FILE * outfile
@@ -678,7 +678,7 @@ cdef class WavefrontAligner:
             if len(wildcard) > 1:
                 raise ValueError(f"wildcard must have length 1, but has length {len(wildcard)}")
             self._wildcard = wildcard
-            self._bwildcard = wildcard.upper().encode("ascii")[0]
+            self._bwildcard = wildcard.upper().encode("cp1251")[0]
         else:
             self._wildcard = None
 
