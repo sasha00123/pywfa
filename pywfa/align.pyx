@@ -329,7 +329,8 @@ cdef class WavefrontAligner:
                  int steps_between_cutoffs=1,
                  int xdrop=20,
                  wildcard=None,
-                 int max_steps=0
+                 int max_steps=0,
+                 memory_mode="ultralow"
                  ):
         self.pattern_len = 0
         self.text_len = 0
@@ -342,6 +343,15 @@ cdef class WavefrontAligner:
         # self.attributes = <wfa.wavefront_aligner_attr_t* > malloc(sizeof(wfa.wavefront_aligner_attr_default))
         cdef wfa.wavefront_aligner_attr_t attributes = wfa.wavefront_aligner_attr_default
         self.wildcard = wildcard
+
+        if memory_mode == "high":
+            attributes.memory_mode = wfa.wavefront_memory_high
+        elif memory_mode == "medium":
+            attributes.memory_mode = wfa.wavefront_memory_med
+        elif memory_mode == "low":
+            attributes.memory_mode = wfa.wavefront_memory_low
+        elif memory_mode == "ultralow":
+            attributes.memory_mode = wfa.wavefront_memory_ultralow
 
         if distance == "indel":
             attributes.distance_metric = wfa.indel
