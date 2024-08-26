@@ -335,7 +335,7 @@ cdef class WavefrontAligner:
         self.pattern_len = 0
         self.text_len = 0
         if pattern:
-            self._pattern = pattern.upper()
+            self._pattern = pattern.lower()
             self._bpattern = self._pattern.encode("cp1251")
             self.pattern_len = len(self._bpattern)
 
@@ -351,7 +351,7 @@ cdef class WavefrontAligner:
         elif memory_mode == "low":
             attributes.memory_mode = wfa.wavefront_memory_low
         elif memory_mode == "ultralow":
-            attributes.memory_mode = wfa.wavefront_memory_ultralow
+            attributes.memory_mode = wfa.wavefront_memory_low
 
         if distance == "indel":
             attributes.distance_metric = wfa.indel
@@ -419,18 +419,18 @@ cdef class WavefrontAligner:
     def wavefront_align(self, text, pattern=None):
         """Perform wavefront alignment.
 
-        :param text: The text sequence to align in uppercase
+        :param text: The text sequence to align in lowercase
         :type text: str
-        :param pattern: The pattern sequence to align in uppercase
+        :param pattern: The pattern sequence to align in lowercase
         :type pattern: str
         :return: Alignment score
         :rtype: int
         """
         if pattern is not None:
-            self._pattern = pattern.upper()
+            self._pattern = pattern.lower()
             self._bpattern = self._pattern.encode("cp1251")
             self.pattern_len = len(self._bpattern)
-        cdef bytes t = text.upper().encode('cp1251')
+        cdef bytes t = text.lower().encode('cp1251')
         self._text = text
         self.text_len = len(t)
         if not self._wildcard:
@@ -688,7 +688,7 @@ cdef class WavefrontAligner:
             if len(wildcard) > 1:
                 raise ValueError(f"wildcard must have length 1, but has length {len(wildcard)}")
             self._wildcard = wildcard
-            self._bwildcard = wildcard.upper().encode("cp1251")[0]
+            self._bwildcard = wildcard.lower().encode("cp1251")[0]
         else:
             self._wildcard = None
 
