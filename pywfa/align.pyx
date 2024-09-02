@@ -351,7 +351,7 @@ cdef class WavefrontAligner:
         elif memory_mode == "low":
             attributes.memory_mode = wfa.wavefront_memory_low
         elif memory_mode == "ultralow":
-            attributes.memory_mode = wfa.wavefront_memory_low
+            attributes.memory_mode = wfa.wavefront_memory_ultralow
 
         if distance == "indel":
             attributes.distance_metric = wfa.indel
